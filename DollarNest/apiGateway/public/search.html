@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Property Search</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="static/index.css" rel="stylesheet"> 
+  <style>
+    /* Styling for the Download Button Overlay */
+.download-overlay {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.download-btn {
+  background-color: rgba(100, 221, 223, 0.8); /* Translucent background */
+  border: none;
+  color: #333;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn i {
+  font-size: 1.2em;
+}
+
+.download-btn:hover {
+  background-color: rgba(255, 255, 255, 1); /* Fully opaque on hover */
+}
+    .filter-bar, .insights-container, .property-table-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-top: 16px;
+}
+.insight-box {
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Alternative Colors for Insights Text */
+.insight-title {
+    font-size: 1.2rem;
+    color: #7b6f64; /* Deep Taupe */
+    /* OR */
+    /* color: #b08d57; Rich Gold */
+    margin-top: 8px;
+}
+.table th, .table td {
+    font-size: 0.9rem;
+}
+
+.navbar .nav-link:hover {
+    color: #ff7043; /* Coral for hover effect */
+}
+.filter-bar{
+  background-color: #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.filter-bar, .insights-container, .property-table-container {
+    /* background-color: #e0e0e0; */
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 16px;
+}
+
+.filter-bar h5, .property-table-container h5 {
+    color: #333333; /* Charcoal for main section titles */
+}
+
+.filter-bar .btn-primary {
+    background-color: #ff7043; /* Coral for the Apply Filters button */
+    border: none;
+    color: #ffffff;
+}
+
+.filter-bar .btn-primary:hover {
+    background-color: #e65c33; /* Slightly darker coral on hover */
+}
+
+.insight-box {
+    text-align: center;
+    font-weight: bold;
+    color: #333333; /* Charcoal for insight titles */
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.insight-title {
+    font-size: 1.2rem;
+    color: #ff7043; /* Coral for insight labels */
+    margin-top: 8px;
+}
+
+.table th {
+    background-color: #333333; 
+    color: #ffffff;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: #f8f9fa; /* Light gray for alternating rows */
+} */
+
+.property-table-container h5 {
+    color: #333333; /* Consistent charcoal color for headers */
+}
+
+.transaction-container h5, .map-container h5, .hotspot-container h5 {
+    color: #333333;
+}
+  </style>
+</head>
+<body>
+
+<!-- Navbar --> 
+<nav class="navbar navbar-expand-lg bg-light"> 
+  <div class="container-fluid"> 
+      <a class="navbar-brand" href="index.html"> 
+        <img src="logo.png" alt="Bootstrap" height="45"> 
+      </a> 
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"> 
+      <span class="navbar-toggler-icon"></span> 
+      </button> 
+      <div class="collapse navbar-collapse" id="navbarNav"> 
+      <ul class="navbar-nav ms-auto"> 
+          <li class="nav-item"> 
+          <a class="nav-link" href="search.html">Search</a> 
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="camera.html">Camera</a>
+          </li> 
+          <!-- <li class="nav-item"> 
+          <a class="nav-link" href="#login">Login</a> 
+          </li>  -->
+      </ul> 
+      </div> 
+  </div> 
+  </nav> 
+<!-- Filter Bar -->
+<div class="container mt-4 filter-bar">
+  <div class="row g-2">
+    <div class="col">
+      <label for="state" class="form-label">State</label>
+      <select id="state" class="form-select">
+        <option selected>Choose...</option>
+        <option>Johor</option>
+        <option>Kedah</option>
+        <option>Kelantan</option>
+        <option>Malacca</option>
+        <option>Negeri Sembilan</option>
+        <option>Pahang</option>
+        <option>Penang</option>
+        <option>Perak</option>
+        <option>Perlis</option>
+        <option>Sabah</option>
+        <option>Sarawak</option>
+        <option>Selangor</option>
+        <option>Terengganu</option>
+        <option>Kuala Lumpur</option>
+        <option>Putrajaya</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="address" class="form-label">Residence Name</label>
+      <input type="text" class="form-control" id="residence" placeholder="Residence">
+    </div>
+    <div class="col">
+      <label for="type" class="form-label">Type</label>
+      <select id="type" class="form-select">
+        <option selected>Choose...</option>
+        <option>Resale</option>
+        <option>Rent</option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="start-transaction-date" class="form-label">Start Transaction Date</label>
+      <input type="date" id="start-transaction-date" class="form-control">
+    </div>
+    <div class="col">
+      <label for="end-transaction-date" class="form-label">End Transaction Date</label>
+      <input type="date" id="end-transaction-date" class="form-control">
+    </div>
+    <div class="col d-flex align-items-end">
+      <button class="btn btn-primary w-100" onclick="applyFilter()">Apply Filters</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Insights Section -->
+<div class="container insights-container">
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="insight-box"  id="highest-price">
+        <p class="insight-title">Highest Sold Price</p>
+        <h2><b>$1.4 Million</b></h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="insight-box"  id="total-sales" >
+        <p class="insight-title">Total Sales</p>
+        <h2><b>34 Units</b></h2>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="insight-box" id="average-price" >
+        <p class="insight-title">Average Price</p>
+        <h2><b>$340,000</b></h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Property Table -->
+ 
+<div class="container" mt-4><h5 class="mt-4" style="text-align: center;"><b>Recently Sold Properties</b></h5></div>
+<div class="container property-table-container">
+  <!-- <h5 class="mt-4" style="text-align: center;"><b>Recently Sold Properties</b></h5> -->
+  <table class="table table-striped table-bordered mt-3">
+    <thead>
+      <tr>
+        <th>Residence Name</th>
+        <th>Area</th>
+        <th>State</th>
+        <th>Type</th>
+        <th>Transaction Date</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody id="transactionDiv">
+      <tr>
+        <td>East Jeffery Point</td>
+        <td>George Town</td>
+        <td>Penang</td>
+        <td>Rent</td>
+        <td>20/06/2025</td>
+        <td>$45,135</td>
+      </tr>
+    
+    </tbody>
+  </table>
+</div>
+<!-- Translucent Download Button Overlay -->
+<div class="download-overlay">
+  <button class="btn btn-light download-btn" onclick="downloadPDF()">
+    <i class="bi bi-download"></i> Download
+  </button>
+</div>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script src="static/search.js"></script>
+</body>
+</html>

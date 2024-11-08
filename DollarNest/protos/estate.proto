@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package Estate;
+
+// The Estate service definition.
+service Estate {
+  rpc GetAllEstate (EstateData) returns (EstateList) {}
+  rpc GetFilteredEstate (EstateFilter) returns (EstateList) {} // Updated to use EstateFilter
+  rpc CreateEstate (EstateData) returns (EstateData) {}
+  rpc UpdateEstate (EstateData) returns (EstateData) {}
+}
+
+// Request message for getting all estates with filters
+message EstateFilter {
+  string state = 1;
+  string residenceName = 2;
+  string type = 3;  // "Rent" or "Resale"
+  
+  // Transaction date range, format: "DD/MM/YYYY"
+  string startTransactionDate = 4;
+  string endTransactionDate = 5;
+
+  // Price range
+  float minPrice = 6;
+  float maxPrice = 7;
+}
+
+// Message representing a single estate record
+message EstateData {
+  string state = 1;
+  string area = 2;
+  string type = 3;
+  string transactionDate = 4;
+  float price = 5;
+  string estateId = 6;
+  string residenceName = 7;
+}
+
+// Response message containing a list of estates
+message EstateList {
+  repeated EstateData estates = 1;
+}
